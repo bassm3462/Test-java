@@ -2,14 +2,30 @@ package com.MangeStudden;
 
 public class StudentInformation {
 
-	private String StudentName,SudentEmail,StudentPassword,StudentGender;
-
-	public String getStudentName() {
-		return StudentName;
+	private String StudentFName,StudentLName,SudentEmail,StudentPassword,StudentGender;
+	private int Id;
+	public int getId() {
+		return Id;
 	}
 
-	public void setStudentName(String studentName) {
-		StudentName = studentName;
+	public void setId(int id) {
+		Id = id;
+	}
+
+	public String getStudentFName() {
+		return StudentFName;
+	}
+
+	public void setStudentFName(String studentName) {
+		StudentFName = studentName;
+	}
+
+	public String getStudentLName() {
+		return StudentLName;
+	}
+
+	public void setStudentLName(String studentLName) {
+		StudentLName = studentLName;
 	}
 
 	public String getSudentEmail() {
@@ -17,6 +33,7 @@ public class StudentInformation {
 	}
 
 	public void setSudentEmail(String sudentEmail) {
+		
 		SudentEmail = sudentEmail;
 	}
 

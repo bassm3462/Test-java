@@ -12,50 +12,39 @@ import java.sql.SQLException;
 
 public class RegisterServlat extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
 
-    public RegisterServlat() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	public RegisterServlat() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setContentType("text/html");
 		StudentInformation information = new StudentInformation();
-		 try {
-			 if (request.getParameter("name").isEmpty() && 
-					    request.getParameter("email").isEmpty() && 
-					    request.getParameter("pass").isEmpty()) {    
-					    request.setAttribute("status", "Please enter the information");
-					    response.sendRedirect("register.jsp");
-					}else {
-	           information.setStudentName(request.getParameter("name"));
-	            information.setSudentEmail(request.getParameter("email"));
-	             information.setStudentPassword(request.getParameter("pass"));
-	            try(Connection connection =StudentDATA.getConnection()){
-	            	  String insertQuery = "INSERT INTO register (name, email, password) VALUES (?, ?, ?)";
-	            	  try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
-	  	                // Set the values for the parameters in the query
-	  	                preparedStatement.setString(1,information.getStudentName());
-	  	                preparedStatement.setString(2, information.getSudentEmail());
-	  	                preparedStatement.setString(3, information.getStudentPassword());
-	  	              int rowsAffected = preparedStatement.executeUpdate();
-	  	            if (rowsAffected > 0) {
-	  	            	System.out.println("insert inserted successfully ");
-	                	  response.sendRedirect("Login.jsp");
-	                    
-	                } else {
+		String fname = request.getParameter("fname");
+		String lname = request.getParameter("lname");
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		if (fname.isEmpty() && email.isEmpty() && password.isEmpty()) {
+			request.setAttribute("status", "Please enter the information");
+			response.sendRedirect("register.jsp");
+		} else {
+
+			information.setStudentFName(fname);
+			information.setStudentLName(lname);
+			information.setSudentEmail(email);
+			information.setStudentPassword(password);
+			int num = StudentDATA.save(information);
+			if (num > 0) {
+				System.out.println("insert inserted successfully ");
+				response.sendRedirect("Login.jsp");
+			} else {
 //	                    out.println("No rows inserted.");
-	                    
-	                    request.setAttribute("statuse", "falied");
-	                    response.sendRedirect("register.jsp");
-	                }
-	            }
-	            }    }
-		 
-	}catch (SQLException e) {
-		System.out.println("Invalid input for 'namu'. Please provide a valid integer.");
-   }
+				request.setAttribute("statuse", "falied");
+				response.sendRedirect("register.jsp");
+			}
+		}
 	}
 
 }
